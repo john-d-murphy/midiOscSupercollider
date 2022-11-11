@@ -1,0 +1,13 @@
+includePaths:
+    -   LOCAL_EXTENSION_DIRECTORY/helpers
+    -   LOCAL_EXTENSION_DIRECTORY/plugins
+    -   LOCAL_SOURCE_DIRECTORY/server/controllers
+    -   LOCAL_SOURCE_DIRECTORY/server
+    -   QUARKS_DIRECTORY/MathLib
+    -   QUARKS_DIRECTORY/JITLibExtensions
+    -   QUARKS_DIRECTORY/BatLib
+    -   QUARKS_DIRECTORY/Require.quark
+    -   QUARKS_DIRECTORY/Singleton.quark
+excludePaths:
+    []
+postInlineWarnings: false

@@ -1,0 +1,2 @@
+MidiControllerLayoutSection : ControllerLayoutSection {}
+

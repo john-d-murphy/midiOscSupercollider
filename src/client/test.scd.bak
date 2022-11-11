@@ -1,0 +1,471 @@
+//a = MidiKnob.new("APCMINI",)
+a = MidiKnob.new("APCMINI", 23);
+a.uid
+
+a = { "foo".postln; 10 }
+
+a.value;
+
+Quarks.gui;
+
+MidiFunc
+
+~controller = MidiController("APCMINI");
+
+~controller.name;
+
+~brain = ControllerBrain();
+
+~brain.addController(~controller);
+
+~brain.getControllerByName("APCMINI");
+
+~mapping = MidiMapping("APCMini", ["K", 23]);
+
+~mapping.genControl();
+
+~mapping.uid;
+~mapping.control;
+
+APCMini
+
+
+
+~control = Mapping.genControl(APCMini, "FOO", ["K", 23]);
+~control = Mapping.genControl(APCMini, "FOO", ["L", 23]);
+~control = Mapping.genControl(MidiMix, "FOO", ["K", 23]);
+~control = Mapping.genControl(MidiMix, "FOO", ["Q", 23]);
+
+~control.uid
+
+~foo = 08
+
+~twod = APCMini.getLayout()
+APCMini.getLayout().rowAt(0)[0..7]
+APCMini.getLayout().slice(nil,5)
+APCMini.getLayout()[0..7].slice(,[0,1])
+
+Matrix.with([[56,2,3],[4,5,6],[7,8,9]]).postln;
+
+a = [[1,1], [2,2],[3,3],[4,4],[5,5]]
+
+a.copyRange(0,1).col
+
+foo = [1,2];
+
+~twod.cols
+
+~twod.getSub(0,0,2,2);
+APCMini.getLayout().getSub(0,0,[8,8])
+APCMini.getLayout().getSub(0,8,[8,1])
+
+MidiMix.layout.getSub(0,1,[6,1])
+
+Array.fill2D(3, 4, { arg r, c; r*c+c; });
+
+~foo = 4
+f = { arg x = 10; y = 20; x + y + ~foo; }
+
+f = { arg x = 10, y = 20; x + y; x }
+f.value().postln;
+
+Set[a, b, c]
+
+Set[1, 2, 3].add(4).postln;
+
+~foo = "MidiMix";
+
+~connection = MIDIHelpers.findEndpointDetails("MIDI Mix", 1);
+~control = { arg chan, num, val;    ["CONTROL", chan,num,val].postln; };
+~symbol = "foo/bar/baz".asSymbol;
+
+~mididef = MIDIdef.new(~symbol, ~control, 16, nil, \control, ~connection.uid, nil, nil);
+~midifunc = MIDIFunc.new(~control, nil, nil, \control, ~connection.uid, nil, nil);
+
+~connection.uid
+
+
+~symbol
+
+MIDIdef.all;
+MIDIdef(~symbol).free;
+-> IdentityDictionary[ (/controller/midi/midimix/midi_mix_1/button/25 -> MIDIdef(/controller/midi/midimix/midi_mix_1/button/25, control, 1835008, nil, nil)), (/controller/midi/midimix/midi_mix_1/knob/30 -> MIDIdef(/controller/midi/midimix/midi_mix_1/knob/30, control, 1835008, nil, nil)), (/controller/midi/midimix/midi_mix_1/knob/56 -> MIDIdef(/controller/midi/midimix/midi_mix_1/knob/56, control, 1835008, nil, nil)), (/controller/midi/midimix/midi_mix_1/button/26 -> MIDIdef(/controller/midi/midimix/midi_mix_1/b...etc...
+
+
+(
+~localMidiMix = MidiMix.new(1);
+OSCdef(\midiMixListener, {|msg| msg.postln; }, ~localMidiMix.elements.rowAt(0)[0].inPaths[0]);
+)
+
+(
+~localAPCMini = APCMini.new(1); OSCdef(\apcMiniListener, {|msg| msg.postln; }, ~localAPCMini.elements.rowAt(0)[0].inPaths[0]);
+)
+
+(
+~netAddr = NetAddr("127.0.0.1", NetAddr.langPort);
+~path = "/controller/midi/launchpad/launchpad_1/light/85/noteon/out".asSymbol;
+~foo = 10
+~netAddr.sendMsg(~path, ~foo);
+)
+
+\foo == \foo
+
+~type = \foo
+
+
+OSCFunc.trace(true); // Turn posting on
+OSCFunc.trace(false); // Turn posting on
+~localLaunchpad = Launchpad.new(1);
+OSCdef(\launchpadListener, {|msg| msg.postln; }, ~localLaunchpad.elements.rowAt(0)[0].inPaths[0]);
+
+~localMpd = MPD18.new(1);
+OSCdef(\mpd18Listener, {|msg| msg.postln; }, ~localMpd.elements.rowAt(0)[4].inPaths[0]);
+
+~localNanoKontrol = NanoKontrol.new(1);
+OSCdef(\nanoKontrolListner, {|msg| msg.postln; }, ~localNanoKontrol.elements.rowAt(2)[4].inPaths[0]);
+~localNanoKontrol.elements.rowAt(2)[3]
+
+~localMpd.elements.rowAt(0)[0].inPaths
+Launchpad.layout
+
+~localLaunchpad.elements.rowAt(0)[0].controlType
+~localMidiMix.elements.rowAt(0)[0].controlType
+~localAPCMini.elements.rowAt(0)[0].controlType
+
+~midiIn = ~localMidiMix.elements.rowAt(0)[0].class
+OSCdef(\midiMixListener, {|msg| msg.postln; }, ~midiIn);
+
+[1,2] ++ [3,4]
+~foo = [1,2]
+~foo = ~foo ++ [3,4]
+~foo
+
+~symbol = "/controller/midi/midimix/midi_mix_1/slider/19".asSymbol
+~symbol.postln;
+
+MIDIdef(~symbol)
+~mididef = MIDIdef.new(~symbol, ~control, 19, nil, \control, ~connection.uid, nil, nil);
+
+
+~midiIn = ~localMidiMix.elements.rowAt(1)[1].controlType
+
+~symbol2 = "/controller/midi/midimix/midi_mix_1/slider/23".asSymbol
+
+~foo = MIDIdef(~symbol2)
+
+~foo.func.value(1,2,3,4);
+~mididef.func.value(1,2,3,4);
+
+~foo.msgNum;
+~mididef.msgNum;
+
+(
+~foo = MidiInLocal.new(0,"FOO");
+~control = { arg src, chan, num, val;    ["CONTROL", chan,num,val].postln; };
+~foo.addFuncTo(\control, ~control);
+)
+
+~midiIn
+
+~midiIn.noteOnList
+
+~midiIn.addFuncTo
+
+~midiIn.control
+
+~midiIn.addFuncTo
+
+\control
+
+~foo = MIDIIn.new(\control)
+
+Exception.debug = false;
+
+MIDIClient.myoutports
+
+//~localMidiMix.populateMapping
+
+~localMidiMix.oscPath
+~localMidiMix.in
+
+MidiController.oscPath
+MidiMix.oscPath
+Controller.oscPath
+
+MidiMix.class = MidiMix
+
+MidiMix.layout
+MidiMix.layoutSections
+
+//MidiMixChannel_01.shape;
+MidiMix.getLayoutSection(MidiMix.layoutSections[0])
+
+~foo = MidiFunctionPolytouch.new
+
+~foo.name
+
+////
+
+// APC MINI LAYOUT
+
+[
+["L", 56], ["L", 57], ["L", 58],["L", 59], ["L", 60],["L", 61],["L", 62],["L", 63], ["L", 82],
+["L", 48], ["L", 49], ["L", 50],["L", 51], ["L", 52],["L", 53],["L", 54],["L", 55], ["L", 83],
+["L", 40], ["L", 41], ["L", 42],["L", 43], ["L", 44],["L", 45],["L", 46],["L", 47], ["L", 84],
+["L", 32], ["L", 33], ["L", 34],["L", 35], ["L", 36],["L", 37],["L", 38],["L", 39], ["L", 85],
+["L", 24], ["L", 25], ["L", 26],["L", 27], ["L", 28],["L", 29],["L", 29],["L", 31], ["L", 86],
+["L", 16], ["L", 17], ["L", 18],["L", 19], ["L", 20],["L", 21],["L", 21],["L", 23], ["L", 87],
+["L", 08], ["L", 09], ["L", 10],["L", 11], ["L", 12],["L", 13],["L", 13],["L", 15], ["L", 88],
+["L", 00], ["L", 01], ["L", 02],["L", 03], ["L", 04],["L", 05],["L", 05],["L", 07], ["L", 89],
+["L", 64], ["L", 65], ["L", 66],["L", 67], ["L", 68],["L", 69],["L", 69],["L", 71], ["L", 90],
+["S", 48], ["S", 49], ["S", 50],["S", 51], ["S", 52],["S", 53],["S", 53],["S", 55], ["S", 91]]
+
+
+///
+MIDIClient.init;
+MIDIClient.sources
+MIDIClient.destinations;
+MIDIn.connectAll;
+
+~connection = MIDIHelpers.findEndpointDetails("Launchpad", 1);
+~connection.uid
+~midiOut.status
+~midiOut = MIDIOut(0, ~connection.uid);
+~midiOut.connect(~connection.endPoint);
+
+~midiOut
+
+~midiIn = MIDIIn(0, ~connection.uid);
+
+~func = { | i | ~midiOut.noteOn(0, 22, i); }
+
+~func.value(0).play
+
+MIDIFunc
+
+//for (0, 128, { arg i; ~midiOut.noteOn(0, 22, i); 1.wait; });
+
+for (0, 10, { arg i; i.postln; })
+
+MIDIOut.connectAll;
+
+(
+var i = 128;
+Routine {
+    { i > -1 }.while {
+        ~midiOut.noteOn(0, 22, i);
+        ~midiOut.noteOn(0, 19, i);
+        ~midiOut.noteOn(0, 16, i);
+        ~midiOut.noteOn(0, 13, i);
+        ~midiOut.noteOn(0, 10, i);
+        ~midiOut.noteOn(0, 07, i);
+        ~midiOut.noteOn(0, 04, i);
+        ~midiOut.noteOn(0, 01, i);
+
+        ~midiOut.noteOn(0, 24, i);
+        ~midiOut.noteOn(0, 21, i);
+        ~midiOut.noteOn(0, 18, i);
+        ~midiOut.noteOn(0, 15, i);
+        ~midiOut.noteOn(0, 12, i);
+        ~midiOut.noteOn(0, 09, i);
+        ~midiOut.noteOn(0, 06, i);
+        ~midiOut.noteOn(0, 03, i);
+        i = i - 1;
+        i.postln;
+        0.1.wait;
+        ~midiOut.noteOn(0, 22, 0);
+        ~midiOut.noteOn(0, 19, 0);
+        ~midiOut.noteOn(0, 16, 0);
+        ~midiOut.noteOn(0, 13, 0);
+        ~midiOut.noteOn(0, 10, 0);
+        ~midiOut.noteOn(0, 07, 0);
+        ~midiOut.noteOn(0, 04, 0);
+        ~midiOut.noteOn(0, 01, 0);
+
+        ~midiOut.noteOn(0, 24, 0);
+        ~midiOut.noteOn(0, 21, 0);
+        ~midiOut.noteOn(0, 18, 0);
+        ~midiOut.noteOn(0, 15, 0);
+        ~midiOut.noteOn(0, 12, 0);
+        ~midiOut.noteOn(0, 09, 0);
+        ~midiOut.noteOn(0, 06, 0);
+        ~midiOut.noteOn(0, 03, 0);
+        0.1.wait;
+    }
+}.play;
+)
+
+for (0, 90, { arg i; for (0, 128, { arg j; ~midiOut.noteOn(0, i, 0); } )} );
+
+//Object(~foo).class
+~foo.implClass
+
+(
+// register functions:
+~noteOff = { arg src, chan, num, vel;    ["NOTE OFF",chan,num,vel / 127].postln; };
+~noteOn = { arg src, chan, num, vel;    ["NOTE ON", chan,num,vel / 127].postln; };
+~polytouch = { arg src, chan, num, vel;    ["POLYTOUCH", chan,num,vel / 127].postln; };
+~control = { arg src, chan, num, val;    ["CONTROL", chan,num,val].postln; };
+~program = { arg src, chan, prog;        ["PROGRAM", chan,prog].postln; };
+~touch = { arg src, chan, pressure;    ["TOUCH", chan,pressure].postln; };
+~bend = { arg src, chan, bend;        ["BEND", chan,bend - 8192].postln; };
+~sysex = { arg src, sysex;        ["SYSEX", sysex].postln; };
+~sysrt = { arg src, chan, val;        ["SYSRT", chan,val].postln; };
+~smpte = { arg src, chan, val;        ["SMTPE", chan,val].postln; };
+MIDIIn.addFuncTo(\noteOn, ~noteOn);
+MIDIIn.addFuncTo(\noteOff, ~noteOff);
+MIDIIn.addFuncTo(\polytouch, ~polytouch);
+MIDIIn.addFuncTo(\control, ~control);
+MIDIIn.addFuncTo(\program, ~program);
+MIDIIn.addFuncTo(\touch, ~touch);
+MIDIIn.addFuncTo(\bend, ~bend);
+MIDIIn.addFuncTo(\sysex, ~sysex);
+MIDIIn.addFuncTo(\sysrt, ~sysrt);
+MIDIIn.addFuncTo(\smpte, ~smpte);
+)
+
+
+//cleanup
+(
+MIDIIn.removeFuncFrom(\noteOn, ~noteOn);
+MIDIIn.removeFuncFrom(\noteOff, ~noteOff);
+MIDIIn.removeFuncFrom(\polytouch, ~polytouch);
+MIDIIn.removeFuncFrom(\control, ~control);
+MIDIIn.removeFuncFrom(\program, ~program);
+MIDIIn.removeFuncFrom(\touch, ~touch);
+MIDIIn.removeFuncFrom(\bend, ~bend);
+MIDIIn.removeFuncFrom(\sysex, ~sysex);
+MIDIIn.removeFuncFrom(\sysrt, ~sysrt);
+MIDIIn.removeFuncFrom(\smpte, ~smpte);
+)
+
+///////// OSC Stuff
+n = NetAddr("127.0.0.1", NetAddr.langPort); // local machine
+OSCFunc.newMatching({|msg, time, addr, recvPort| \matching.postln}, '/chat', n); // path matching
+OSCFunc({|msg, time, addr, recvPort| \oneShot.postln}, '/chat', n).oneShot; // once only
+OSCdef(\test, {|msg, time, addr, recvPort| \unmatching.postln}, '/chat', n); // def style
+
+m = NetAddr("127.0.0.1", NetAddr.langPort); // loopback
+m.sendMsg("/chat", "Hello App 1");
+m.sendMsg("/chat", "Hello App 1"); // oneshot gone
+m.sendMsg("/ch?t", "Hello App 1");
+m.sendMsg("/*", "Hello App 1");
+m.sendMsg("/chit", "Hello App 1"); // nothing
+
+m = NetAddr("127.0.0.1", NetAddr.langPort); // loopback
+~foo = OSCdef(\argtest, {|msg ... args| msg[1].postln + "!!!"}, '/hey', argTemplate: ['you']);
+m.sendMsg("/hey", "you"); // oscdef will respond
+m.sendMsg("/hey", "there"); // oscdef will not respond, filtered out by argTemplate
+
+~foo.addFunc({|msg ... args| msg[1].postln + "!!!"})
+
+/// Require
+EXAMPLES::
+
+code::
+// Run the code in ./controllers.scd
+Require("controllers");
+
+// Run the code in ./mixer.scd, and store the result in ~mixer
+~mixer = Require("mixer");
+
+// Run all of the .scd's in the ./synths directory. Always re-run, even if the values haven't changed
+Require("synths/*", always:true);
+
+// Run an .scd at an absolute path
+Require("/Users/me/Desktop/audioscope.scd");
+
+// Run the code in ./reverb.scd, and clear the cache after a CmdPeriod. We can imagine reverb.scd runs a Reverb synth on the server, which CmdPeriod would free.
+Require("reverb", cmdPeriod:true)'
+
+// Singleton
+CLASSMETHODS::
+
+METHOD:: new
+For Singleton subclasses to work properly, code::Singleton:*new:: must be called. This should generally not be overridden by subclasses.
+
+ARGUMENT:: name
+A name identifying the Singleton object. The internal storage is identity-based, so Symbol's should be used instead of String's.
+
+ARGUMENT::  ...settings
+Arguments to be forwarded to the code::set:: method of the object.
+returns:: An instance of the Singleton object.
+
+METHOD:: createNew
+This returns a new instance of your class. Override this in a subclass to provide custom behavior when constructing a new instance of your class - this is the equivalent of the normal code::*new:: method. This should not be called directly.
+
+METHOD:: all
+returns:: Returns an IdentityDictionary of all Singletons registered for this class.
+
+METHOD:: know
+If set to true, the Singleton interprets method calls as calls to the Singleton constructor. With code::know = true::, the following are equivalent:
+code::
+Singleton(\something).set("some value");
+Singleton(\something, "some value");
+Singleton.something.set("some value");
+Singleton.something = "some value";
+::
+
+INSTANCEMETHODS::
+
+////////////////////////////
+
+(
+t = TempoClock.new;
+f = Routine.new({(0..).do({|ind| ind.yield})});
+~cat = "meow";
+p = Pbind(
+    /*arbitrary pattern to specify the rhythm - can make it a Pfunc that references external variables
+    so that the rhythm can be generatively controlled by external data (eg midi or osc or whatever)
+    */
+    \delta, Pfunc({|argEv| var wt = ((f.next+1)*1.0); [argEv, wt].postln; wt.rand}),
+
+    /*arbitrary parameters that you can use in each event of the pattern*/
+    \p1, Pseq((0,1..100), inf, 1),
+    \p2, Pseq([0, 1, 2, 4], inf),
+    \p3, Pseq([0, 1, 2, 4], inf),
+    \cat, ~cat,
+
+    /*arbitrary play function to execute each pattern event */
+    \play, {[~cat, ~p1, ~p2, ~p3, ~delta, t.beats].postln}
+).finDur(3).play(t);
+//.fin(n) limits the output to n events, finDur(d) for d number of beats
+)
+
+//p is now an EventStream that you can start/stop on the fly
+p.stop
+p.pause //from what i can tell, pause and stop don't do anything different - stop doesn't reset the pattern
+p.play
+p.reset
+p.isPlaying
+
+///////////
+
+a = (\foo: 7);
+a.at(\foo);
+a[\bar].do
+
+///////////
+
+//set address (if you've already done this no need to do it again)
+b = NetAddr.new("127.0.0.1",NetAddr.langPort);
+//msg will receive the OSC message as an array, with index 0 being the address and index 1 onwards being the message.
+//setting msg[1] as the frequency will give the first parameter of the OSC message as an argument
+//setting msg[2] as the pulse width would allow you to send the second message parameter as the pulse width, and so on...
+( OSCdef(\dinger, { |msg| {Pulse.ar(msg[1],rrand(0.01,0.5),0.3)!2 * EnvGen.ar(Env.perc,doneAction:2)}.play }, '/ding'))
+//make a 900Hz ding
+b.sendMsg("/ding",900);
+//make a ding at a random pitch
+b.sendMsg("/ding",rrand(100,2000))
+
+///////
+
+Parent.msg
+Child1.msg
+Child2.msg
+
+///////
+
+// Singleton
+ControllerBrain().controllers
+
